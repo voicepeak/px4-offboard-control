@@ -1,0 +1,10 @@
+# PD 控制器参数
+# 修改后可通过 launch 文件的 rosparam 直接生效
+
+Kp_pos: 0.95      # 位置外环 P 增益
+Kp_vel: 1.8       # 速度内环 P 增益
+Kd_vel: 0.4       # 速度内环 D 增益（阻尼）
+max_vel: 3.0      # 最大期望速度 [m/s]
+max_accel: 5.0    # 最大期望加速度 [m/s^2]
+max_tilt: 0.5     # 最大倾斜角 [rad] ≈ 28.6°
+hover_thrust: 0.5 # 悬停时的归一化油门，不同机型需要重新标定
