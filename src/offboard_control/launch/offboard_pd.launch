@@ -3,7 +3,7 @@
         <arg name="fcu_url" value="udp://:14540@127.0.0.1:14557"/>
     </include>
 
-    <node pkg="offboard_control" type="offboard_pd_controller" name="offboard_pd_controller"
+    <node pkg="offboard_control" type="offboard_pd_controller.py" name="offboard_pd_controller"
           output="screen">
         <rosparam command="load" file="$(find offboard_control)/config/pd_params.yaml"/>
     </node>

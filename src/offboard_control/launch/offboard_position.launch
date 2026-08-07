@@ -3,6 +3,6 @@
         <arg name="fcu_url" value="udp://:14540@127.0.0.1:14557"/>
     </include>
 
-    <node pkg="offboard_control" type="offboard_position" name="offboard_position"
+    <node pkg="offboard_control" type="offboard_position.py" name="offboard_position"
           output="screen"/>
 </launch>

@@ -28,6 +28,12 @@ target_link_libraries(offboard_position ${catkin_LIBRARIES})
 add_executable(offboard_pd_controller src/offboard_pd_controller.cpp)
 target_link_libraries(offboard_pd_controller ${catkin_LIBRARIES})
 
+catkin_install_python(PROGRAMS
+  scripts/offboard_position.py
+  scripts/offboard_pd_controller.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
 install(TARGETS
   offboard_position
   offboard_pd_controller

@@ -5,6 +5,9 @@
 1. 发布目标位置，由 PX4 内部控制器完成位置、速度和姿态控制。
 2. 自己实现位置外环和速度 PD 内环，计算目标姿态与推力后发送给 PX4。
 
+每个节点都提供 **Python（rospy）** 和 **C++（roscpp）** 两种实现，逻辑完全一致：
+launch 文件默认运行 Python 版本，C++ 版本作为参考保留。
+
 代码中保留了较详细的中文注释，适合配合 Gazebo 仿真理解 Offboard 控制流程。
 
 > 仅用于仿真和学习。PD 参数、悬停油门和安全限制未针对真实无人机标定，请勿直接用于真机。
@@ -32,7 +35,8 @@ PX4 SITL <----> Gazebo
 
 ### 位置控制节点
 
-源码：`src/offboard_control/src/offboard_position.cpp`
+Python 源码：`src/offboard_control/scripts/offboard_position.py`
+C++ 源码：`src/offboard_control/src/offboard_position.cpp`（参考）
 
 发布：
 
@@ -44,7 +48,8 @@ PX4 SITL <----> Gazebo
 
 ### 位置-速度 PD 节点
 
-源码：`src/offboard_control/src/offboard_pd_controller.cpp`
+Python 源码：`src/offboard_control/scripts/offboard_pd_controller.py`
+C++ 源码：`src/offboard_control/src/offboard_pd_controller.cpp`（参考）
 
 控制流程：
 
@@ -83,6 +88,9 @@ px4_offboard_ws/
         ├── launch/
         │   ├── offboard_position.launch
         │   └── offboard_pd.launch
+        ├── scripts/
+        │   ├── offboard_position.py
+        │   └── offboard_pd_controller.py
         └── src/
             ├── offboard_position.cpp
             └── offboard_pd_controller.cpp
@@ -203,6 +211,17 @@ roslaunch offboard_control offboard_pd.launch
 ```
 
 不要同时运行两个 Offboard 控制节点，否则它们会向 PX4 发送互相冲突的 setpoint。
+
+### 直接运行 Python 节点
+
+如果 MAVROS 已经单独启动，也可以直接用 `rosrun` 运行 Python 节点：
+
+```bash
+source /opt/ros/noetic/setup.bash
+source ~/px4_offboard_ws/devel/setup.bash
+rosrun offboard_control offboard_position.py
+rosrun offboard_control offboard_pd_controller.py _Kp_pos:=0.8
+```
 
 ## PD 参数
 
